@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<!-- 定时器 -->
+	<bean id="zerotrigger" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="questionNumTrigger-overTimer"/>
+				<ref bean="statichtmltrigger-overTimer"/>
+			</list>
+		</property>
+	</bean>
+	<!-- 定时更新问题个数 -->
+	<bean id="questionNumTrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="questionNumJobDetailFactory-overTimer"/>
+		</property>
+		<property name="cronExpression">
+			<value>0 1/3 * * * ?</value>
+		</property>
+	</bean>
+	<bean id="questionNumJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="iaskCommonServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>initQuestionNum</value>
+		</property>
+		<property name="concurrent" value="false"/>
+	</bean>
+	<!-- 静态化页面 -->
+	<bean id="htmlServiceImpl" class="com.gs.service.iask.impl.HtmlServiceImpl" scope="singleton" autowire="byName">
+	<property name="baseurl"><value>http://localhost/</value></property>
+	<property name="basepath"><value>e:\\www.gosunn.com\\gosunn/</value></property>
+	<property name="urls">
+		<map>
+			<entry key="iask/queryQuestion.ghtml" value="iask/index.html"/>
+			<entry key="iask/static/qdetailright.ghtml" value="iask/qdetailright.html"/>
+			<entry key="jsp.ghtml?rel=iask/small/xtgg" value="iask/xtgg.html"/>
+			<entry key="iask/leftgroup.ghtml" value="iask/main/leftgroup.html"/>
+			<entry key="iask/rightgroup.ghtml" value="iask/main/rightgroup.html"/>
+			<entry key="small/tjry.ghtml" value="iask/small/tjry.html"/>
+			<entry key="sns/static/gsjgd.ghtml" value="sns/small/jgd.html"/>
+		</map>
+	</property>
+	</bean>
+	<!-- 定时静态化页面 -->
+	<bean id="statichtmltrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="statichtmltriggerJobDetailFactory-overTimer"/>
+		</property>
+		<property name="cronExpression">
+			<value>0 1/5 * * * ?</value>
+		</property>
+	</bean>
+	<bean id="statichtmltriggerJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="htmlServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>staticHtml</value>
+		</property>
+		<property name="concurrent" value="false"/>
+	</bean>
+</beans>

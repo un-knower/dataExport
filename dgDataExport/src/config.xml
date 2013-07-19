@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config> 
+	<transfer id="com.test.cvs.StPPTNR" type="trans" interval="1" name="数据转换" entity="StPptnR" filePath="${.now?string('yyyyMM')}">
+	
+	</transfer> 
+</config>
