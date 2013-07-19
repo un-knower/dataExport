@@ -1,12 +1,10 @@
 package com.zero.service.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -27,15 +25,7 @@ public class CsvServiceImpl implements CsvService {
 		} else {
 			Object data = list.get(0);
 			Template template = templateService.get(data.getClass().getName());
-			for (Object object : list) {
-				try {
-					File templateFile = new File(template.getFilePath());
-					FileUtils.writeStringToFile(templateFile,
-							object.toString(), "UTF-8");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			templateService.write(template, list, true);
 			log.info(template.getName() + "转换");
 		}
 		return null;

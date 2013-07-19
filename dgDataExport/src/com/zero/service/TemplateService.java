@@ -1,5 +1,6 @@
 package com.zero.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.zero.Template;
@@ -64,7 +65,7 @@ public interface TemplateService {
 	 * @param content
 	 *            模板文件内容
 	 */
-	void write(String id, String content);
+	void write(String id, String content, Boolean append);
 
 	/**
 	 * 写入模板文件内容
@@ -74,6 +75,8 @@ public interface TemplateService {
 	 * @param content
 	 *            模板文件内容
 	 */
-	void write(Template template, String content);
+	void write(Template template, String content, Boolean append);
+
+	void write(Template template, Collection<?> collection, Boolean append);
 
 }

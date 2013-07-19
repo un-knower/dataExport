@@ -45,6 +45,6 @@ public class StPPTNR {
 	public String toString() {
 		return tpcode + ","
 				+ DateUtil.getDateStr(tm, CommonAttributes.DATE_PATTERNS[7])
-				+ "" + drp;
+				+ "," + drp;
 	}
 }

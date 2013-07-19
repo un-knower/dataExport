@@ -8,6 +8,7 @@ package com.zero.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -38,7 +39,7 @@ public class TemplateServiceImpl implements TemplateService,
 	/** servletContext */
 	private ServletContext servletContext;
 
-	@Value("${template.loader_path}")
+	@Value("${transferFile}")
 	private String[] templateLoaderPaths;
 
 	public void setServletContext(ServletContext servletContext) {
@@ -124,20 +125,34 @@ public class TemplateServiceImpl implements TemplateService,
 		return templateContent;
 	}
 
-	public void write(String id, String content) {
+	public void write(String id, String content, Boolean append) {
 		Template template = get(id);
-		write(template, content);
+		write(template, content, append);
 	}
 
-	public void write(Template template, String content) {
+	public void write(Template template, String content, Boolean append) {
 		String templatePath = servletContext.getRealPath(templateLoaderPaths[0]
 				+ template.getFilePath());
 		File templateFile = new File(templatePath);
 		try {
-			FileUtils.writeStringToFile(templateFile, content, "UTF-8");
+			FileUtils.writeStringToFile(templateFile, content, "UTF-8", append);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void write(Template template, Collection<?> collection,
+			Boolean append) {
+		String templatePath = servletContext.getRealPath(templateLoaderPaths[0]
+				+ template.getFilePath());
+		File templateFile = new File(templatePath);
+		try {
+			FileUtils.writeLines(templateFile, "UTF-8", collection, "\r\n",
+					true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**

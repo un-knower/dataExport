@@ -13,7 +13,7 @@
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
 	<bean id="ViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/app/"></property> <!-- 视图文件的前缀 -->
+		<property name="prefix" value="/WEB-INF/template/"></property> <!-- 视图文件的前缀 -->
 		<property name="suffix" value=".jsp"></property> <!-- 视图文件的后缀名 -->
 		<!-- view是用什么显示，这里是jsp，还可以用velocity之类的 -->
 		<property name="viewClass"
