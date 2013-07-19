@@ -14,6 +14,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<context:component-scan base-package="com.zero.service" />
 	<context:component-scan base-package="com.zero.dao" />
 	<context:property-placeholder location="classpath*:/config.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
-	
+	 
 	<!-- 定时器配置<import resource="zero-timer.xml"/> -->
 </beans>
