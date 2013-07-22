@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <config> 
-	<transfer id="com.test.cvs.StPPTNR" type="trans" interval="1" name="数据转换" entity="StPptnR" filePath="ST_PPTN_R.csv">
+	<transfer id="com.zero.entity.StPptnR" type="trans" interval="1" name="数据转换" entity="StPptnR" filePath="ST_PPTN_R.csv">
 	
 	</transfer> 
 </config>
