@@ -141,7 +141,7 @@ public class TemplateServiceImpl implements TemplateService,
 		}
 	}
 
-	public void write(Template template, Collection<?> collection,
+	public File write(Template template, Collection<?> collection,
 			Boolean append) {
 		String templatePath = servletContext.getRealPath(templateLoaderPaths[0]
 				+ template.getFilePath());
@@ -152,6 +152,7 @@ public class TemplateServiceImpl implements TemplateService,
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return templateFile;
 
 	}
 

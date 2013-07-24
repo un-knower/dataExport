@@ -147,9 +147,22 @@ public class StPptnR implements java.io.Serializable {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(id.getStcd() + ",");
+		sb.append(id.getStcd());
+		sb.append(",");
 		sb.append(DateUtil.getDateStr(id.getTm(),
 				CommonAttributes.DATE_PATTERNS[7]));
+		sb.append(",");
+		sb.append(this.getDrp() == null ? "" : this.getDrp().toString());
+		sb.append(",");
+		sb.append(this.getIntv() == null ? "" : this.getIntv().toString());
+		sb.append(",");
+		sb.append(this.getPdr() == null ? "" : this.getPdr().toString());
+		sb.append(",");
+		sb.append(this.getDyp() == null ? "" : this.getDyp().toString());
+		sb.append(",");
+		sb.append(this.getWth() == null ? "" : this.getWth());
+		sb.append(",");
+		sb.append(this.getRntypeGd() == null ? "" : this.getRntypeGd());
 		return sb.toString();
 	}
 }

@@ -1,5 +1,6 @@
 package com.zero.service.impl;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.zero.service.CsvService;
+import com.zero.service.FtpService;
 import com.zero.service.OracleDataService;
 import com.zero.service.TransferService;
 
@@ -19,13 +21,16 @@ public class TransferServiceImpl implements TransferService {
 	@Autowired
 	@Qualifier("csvServiceImpl")
 	private CsvService csvService;
+	@Autowired
+	@Qualifier("ftpServiceImpl")
+	private FtpService ftpService;
 
 	public void transferStPPTNR() {
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DATE, -5);
-		System.out.println(c.getTime());
 		List list = oracleDataService.getStPPTNRList(c.getTime(), 1, 100);
-		csvService.ListToCsv(list);
+		File file = csvService.ListToCsv(list, false);
+		ftpService.sentTo(file);
 	}
 
 	public void transferStRiverR() {

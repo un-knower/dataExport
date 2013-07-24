@@ -1,5 +1,6 @@
 package com.zero.service;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
@@ -77,6 +78,6 @@ public interface TemplateService {
 	 */
 	void write(Template template, String content, Boolean append);
 
-	void write(Template template, Collection<?> collection, Boolean append);
+	File write(Template template, Collection<?> collection, Boolean append);
 
 }

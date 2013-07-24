@@ -18,21 +18,17 @@ public class CsvServiceImpl implements CsvService {
 	private TemplateService templateService;
 	protected final Logger log = Logger.getLogger(getClass());
 
-	public File ListToCsv(List<?> list) {
+	public File ListToCsv(List<?> list, Boolean append) {
 		if (list.isEmpty()) {
 			log.info("无数据");
 			return null;
 		} else {
 			Object data = list.get(0);
 			Template template = templateService.get(data.getClass().getName());
-			templateService.write(template, list, true);
+			File file = templateService.write(template, list, true);
 			log.info(template.getName() + "转换");
+			return file;
 		}
-		return null;
-	}
-
-	public File ListToCsv(List<?> list, String path) {
-		return null;
 	}
 
 }
