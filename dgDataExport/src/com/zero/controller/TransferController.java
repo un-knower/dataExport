@@ -16,6 +16,9 @@ public class TransferController {
 	@RequestMapping("test")
 	public String Transfer() {
 		transferService.transferStPPTNR();
+		transferService.transferStRiverR();
+		transferService.transferStRsvrR();
+		transferService.transferStWasR();
 		return "/list";
 	}
 }

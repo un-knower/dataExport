@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.test.util.DateUtil;
+import com.zero.CommonAttributes;
+
 /**
  * StRsvrR entity. @author MyEclipse Persistence Tools
  */
@@ -20,6 +23,10 @@ public class StRsvrR implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8859387549161854375L;
 	private StRsvrRId id;
 	private Double rz;
 	private Double inq;
@@ -162,6 +169,35 @@ public class StRsvrR implements java.io.Serializable {
 
 	public void setMddt(Date mddt) {
 		this.mddt = mddt;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(id.getStcd());
+		sb.append(",");
+		sb.append(DateUtil.getDateStr(id.getTm(),
+				CommonAttributes.DATE_PATTERNS[7]));
+		sb.append(",");
+
+		sb.append(this.getRz() == null ? "" : this.getRz().toString());
+		sb.append(",");
+		sb.append(this.getInq() == null ? "" : this.getInq().toString());
+		sb.append(",");
+		sb.append(this.getW() == null ? "" : this.getW().toString());
+		sb.append(",");
+		sb.append(this.getOtq() == null ? "" : this.getOtq().toString());
+		sb.append(",");
+		sb.append(this.getRwchrcd() == null ? "" : this.getRwchrcd());
+		sb.append(",");
+		sb.append(this.getRwptn() == null ? "" : this.getRwptn());
+		sb.append(",");
+		sb.append(this.getInqdr() == null ? "" : this.getInqdr().toString());
+		sb.append(",");
+		sb.append(this.getMsqmt() == null ? "" : this.getMsqmt());
+		sb.append(",");
+
+		return sb.toString();
 	}
 
 }

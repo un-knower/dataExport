@@ -23,6 +23,10 @@ public class StPptnR implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 582754904710734670L;
 	private StPptnRId id;
 	private Double drp;
 	private Double intv;

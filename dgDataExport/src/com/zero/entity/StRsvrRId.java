@@ -1,6 +1,7 @@
 package com.zero.entity;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
@@ -14,6 +15,10 @@ public class StRsvrRId implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 875749945354502671L;
 	private String stcd;
 	private Date tm;
 
@@ -33,7 +38,7 @@ public class StRsvrRId implements java.io.Serializable {
 
 	@Column(name = "STCD", nullable = false, length = 16)
 	public String getStcd() {
-		return this.stcd;
+		return stcd;
 	}
 
 	public void setStcd(String stcd) {
@@ -43,20 +48,24 @@ public class StRsvrRId implements java.io.Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "TM", nullable = false, length = 7)
 	public Date getTm() {
-		return this.tm;
+		return tm;
 	}
 
 	public void setTm(Date tm) {
 		this.tm = tm;
 	}
 
+	@Override
 	public boolean equals(Object other) {
-		if ((this == other))
+		if ((this == other)) {
 			return true;
-		if ((other == null))
+		}
+		if ((other == null)) {
 			return false;
-		if (!(other instanceof StRsvrRId))
+		}
+		if (!(other instanceof StRsvrRId)) {
 			return false;
+		}
 		StRsvrRId castOther = (StRsvrRId) other;
 
 		return ((this.getStcd() == castOther.getStcd()) || (this.getStcd() != null
@@ -67,6 +76,7 @@ public class StRsvrRId implements java.io.Serializable {
 						castOther.getTm())));
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 

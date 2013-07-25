@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.test.util.DateUtil;
+import com.zero.CommonAttributes;
+
 /**
  * StWasR entity. @author MyEclipse Persistence Tools
  */
@@ -20,6 +23,10 @@ public class StWasR implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5760574181865176749L;
 	private StWasRId id;
 	private Double upz;
 	private Double dwz;
@@ -140,6 +147,29 @@ public class StWasR implements java.io.Serializable {
 
 	public void setMddt(Date mddt) {
 		this.mddt = mddt;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(id.getStcd());
+		sb.append(",");
+		sb.append(DateUtil.getDateStr(id.getTm(),
+				CommonAttributes.DATE_PATTERNS[7]));
+		sb.append(",");
+		sb.append(this.getUpz() == null ? "" : this.getUpz().toString());
+		sb.append(",");
+		sb.append(this.getDwz() == null ? "" : this.getDwz().toString());
+		sb.append(",");
+		sb.append(this.getTgtq() == null ? "" : this.getTgtq().toString());
+		sb.append(",");
+		sb.append(this.getSwchrcd() == null ? "" : this.getSwchrcd());
+		sb.append(",");
+		sb.append(this.getSdwwptn() == null ? "" : this.getSdwwptn());
+		sb.append(",");
+		sb.append(this.getSupwptn() == null ? "" : this.getSupwptn());
+		sb.append(",");
+		return sb.toString();
 	}
 
 }
