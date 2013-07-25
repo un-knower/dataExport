@@ -7,13 +7,11 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import com.zero.dao.OracleDataDao;
 import com.zero.entity.StPptnR;
 import com.zero.service.OracleDataService;
 
-@Service("oracleDataServiceImpl")
 public class OracleDataServiceImpl implements OracleDataService {
 	@Autowired
 	@Qualifier("oracleDataDaoImpl")

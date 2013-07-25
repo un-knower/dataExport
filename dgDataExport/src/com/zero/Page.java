@@ -1,121 +1,163 @@
+/*
+ * Copyright 2005-2013 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
+ */
 package com.zero;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.zero.Order.Direction;
+
 /**
- * 分页bean.
+ * 分页
  * 
- * @author 姜浩
+ * @author SHOP++ Team
+ * @version 3.0
  */
+public class Page<T> implements Serializable {
 
-public class Page {
-	/**
-	 * 默认的每次记录数.
-	 */
-	protected int pagesize = 10;
+	private static final long serialVersionUID = -2053800594583879853L;
 
-	/**
-	 * 总页数.
-	 */
-	protected int pagetotal = 0;
-	/**
-	 * 总记录数.
-	 */
-	protected int rectotal = 0;
+	/** 内容 */
+	private final List<T> content = new ArrayList<T>();
+
+	/** 总记录数 */
+	private final long total;
+
+	/** 分页信息 */
+	private final Pageable pageable;
 
 	/**
-	 * @return pagesize : 返回 pagesize.
+	 * 初始化一个新创建的Page对象
 	 */
-	/**
-	 * 当前页数.
-	 */
-	protected int pageno = 1;
-
-	/**
-	 * 数据列表.
-	 */
-	protected List<? extends Object> list;
-
 	public Page() {
-
-	}
-
-	public Page(int pageno, int pagesize) {
-		super();
-		this.pagesize = pagesize;
-		this.pageno = pageno;
-	}
-
-	public int getPagesize() {
-		return pagesize;
+		this.total = 0L;
+		this.pageable = new Pageable();
 	}
 
 	/**
-	 * @param pagesize
-	 *            : 设置 pagesize.
+	 * @param content
+	 *            内容
+	 * @param total
+	 *            总记录数
+	 * @param pageable
+	 *            分页信息
 	 */
-	public void setPagesize(int pagesize) {
-		this.pagesize = pagesize;
+	public Page(List<T> content, long total, Pageable pageable) {
+		this.content.addAll(content);
+		this.total = total;
+		this.pageable = pageable;
 	}
 
 	/**
-	 * @return pageno : 返回 pageno.
+	 * 获取页码
+	 * 
+	 * @return 页码
 	 */
-	public int getPageno() {
-		return pageno;
+	public int getPageNumber() {
+		return pageable.getPageNumber();
 	}
 
 	/**
-	 * @param pageno
-	 *            : 设置 pageno.
+	 * 获取每页记录数
+	 * 
+	 * @return 每页记录数
 	 */
-	public void setPageno(int pageno) {
-		this.pageno = pageno;
+	public int getPageSize() {
+		return pageable.getPageSize();
 	}
 
 	/**
-	 * @return rectotal : 返回 rectotal.
+	 * 获取搜索属性
+	 * 
+	 * @return 搜索属性
 	 */
-	public int getRectotal() {
-		return rectotal;
+	public String getSearchProperty() {
+		return pageable.getSearchProperty();
 	}
 
 	/**
-	 * @param rectotal
-	 *            : 设置 rectotal.
+	 * 获取搜索值
+	 * 
+	 * @return 搜索值
 	 */
-	public void setRectotal(int rectotal) {
-		this.rectotal = rectotal;
+	public String getSearchValue() {
+		return pageable.getSearchValue();
 	}
 
 	/**
-	 * @return pagetotal : 返回 pagetotal.
+	 * 获取排序属性
+	 * 
+	 * @return 排序属性
 	 */
-	public int getPagetotal() {
-		return pagetotal;
+	public String getOrderProperty() {
+		return pageable.getOrderProperty();
 	}
 
 	/**
-	 * @param pagetotal
-	 *            : 设置 pagetotal.
+	 * 获取排序方向
+	 * 
+	 * @return 排序方向
 	 */
-	public void setPagetotal(int pagetotal) {
-		this.pagetotal = pagetotal;
+	public Direction getOrderDirection() {
+		return pageable.getOrderDirection();
 	}
 
 	/**
-	 * @return list : 返回 list.
+	 * 获取排序
+	 * 
+	 * @return 排序
 	 */
-	public List<? extends Object> getList() {
-		return list;
+	public List<Order> getOrders() {
+		return pageable.getOrders();
 	}
 
 	/**
-	 * @param list
-	 *            : 设置 list.
+	 * 获取筛选
+	 * 
+	 * @return 筛选
 	 */
-	public void setList(List<? extends Object> list) {
-		this.list = list;
+	public List<Filter> getFilters() {
+		return pageable.getFilters();
+	}
+
+	/**
+	 * 获取总页数
+	 * 
+	 * @return 总页数
+	 */
+	public int getTotalPages() {
+		return (int) Math.ceil((double) getTotal() / (double) getPageSize());
+	}
+
+	/**
+	 * 获取内容
+	 * 
+	 * @return 内容
+	 */
+	public List<T> getContent() {
+		return content;
+	}
+
+	/**
+	 * 获取总记录数
+	 * 
+	 * @return 总记录数
+	 */
+	public long getTotal() {
+		return total;
+	}
+
+	/**
+	 * 获取分页信息
+	 * 
+	 * @return 分页信息
+	 */
+	public Pageable getPageable() {
+		return pageable;
 	}
 
 }

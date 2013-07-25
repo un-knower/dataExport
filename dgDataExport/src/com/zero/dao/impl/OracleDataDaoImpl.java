@@ -1,4 +1,4 @@
-package com.zero.dao;
+package com.zero.dao.impl;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import com.zero.dao.OracleDataDao;
+
 public class OracleDataDaoImpl implements OracleDataDao {
 
 	@Autowired

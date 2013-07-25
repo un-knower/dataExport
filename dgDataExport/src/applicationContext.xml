@@ -26,40 +26,36 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="acquireIncrement" value="${connection_pools.acquire_increment}" />
 		<property name="checkoutTimeout" value="${connection_pools.checkout_timeout}" />
 	</bean>
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource">
-			<ref local="dataSource" />
-		</property>
-		<property name="hibernateProperties">
-			<value>
-			  <!-- org.hibernate.dialect.MySQLDialect  org.hibernate.dialect.Oracle9Dialect org.hibernate.dialect.SQLServerDialect-->
-			    hibernate.dialect=org.hibernate.dialect.Oracle9Dialect
-			    hibernate.show_sql=true
-			    hibernate.format_sql=false
-			    hibernate.cglib.use_reflection_optimizer=true
-			    hibernate.query.factory_class=org.hibernate.hql.ast.ASTQueryTranslatorFactory
-			    jdbc.fetch_size=50
-			    jdbc.batch_size=30
-			</value>
-		</property>
-		<property name="packagesToScan" value="com.zero.entity" />
-	</bean>
-	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource">
-			<ref bean="dataSource" />
-		</property>
-	</bean>
-	<!-- 配置事务管理器 -->
-	<bean id="txManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceXmlLocation" value="classpath*:/persistence.xml" />
+		<property name="persistenceUnitName" value="persistenceUnit" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="false" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+				<prop key="hibernate.jdbc.fetch_size">${hibernate.jdbc.fetch_size}</prop>
+				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+				<prop key="hibernate.connection.isolation">2</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+				<prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
+				<prop key="hibernate.search.default.indexBase">${java.io.tmpdir}/${system.project_name}/index</prop>
+			</props>
+		</property>
 	</bean>
-	<!-- 采用注解来管理事务 -->
-	<tx:annotation-driven transaction-manager="txManager" />
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	<!-- 定时器配置<import resource="zero-timer.xml"/> -->
 </beans>
