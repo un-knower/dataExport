@@ -8,7 +8,6 @@ package com.zero.dao.impl;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +31,6 @@ import org.springframework.util.Assert;
 import com.zero.Filter;
 import com.zero.Filter.Operator;
 import com.zero.Order;
-import com.zero.Order.Direction;
 import com.zero.Page;
 import com.zero.Pageable;
 import com.zero.dao.BaseDao;
@@ -44,7 +42,7 @@ import com.zero.dao.BaseDao;
  * @version 3.0
  */
 public abstract class BaseDaoImpl<T, ID extends Serializable> implements
-		BaseDao<T, ID> {
+BaseDao<T, ID> {
 
 	/** 实体类类型 */
 	private Class<T> entityClass;
@@ -174,19 +172,7 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements
 		Assert.notNull(criteriaQuery.getSelection());
 		Assert.notEmpty(criteriaQuery.getRoots());
 
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		Root<T> root = getRoot(criteriaQuery);
 		addRestrictions(criteriaQuery, filters);
-		// addOrders(criteriaQuery, orders);
-		// if (criteriaQuery.getOrderList().isEmpty()) {
-		// if (OrderEntity.class.isAssignableFrom(entityClass)) {
-		// criteriaQuery.orderBy(criteriaBuilder.asc(root
-		// .get(OrderEntity.ORDER_PROPERTY_NAME)));
-		// } else {
-		// criteriaQuery.orderBy(criteriaBuilder.desc(root
-		// .get(OrderEntity.CREATE_DATE_PROPERTY_NAME)));
-		// }
-		// }
 		TypedQuery<T> query = entityManager.createQuery(criteriaQuery)
 				.setFlushMode(FlushModeType.COMMIT);
 		if (first != null) {
@@ -334,90 +320,90 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		Predicate restrictions = criteriaQuery.getRestriction() != null ? criteriaQuery
 				.getRestriction() : criteriaBuilder.conjunction();
-		for (Filter filter : filters) {
-			if (filter == null || StringUtils.isEmpty(filter.getProperty())) {
-				continue;
-			}
-			if (filter.getOperator() == Operator.eq
-					&& filter.getValue() != null) {
-				if (filter.getIgnoreCase() != null && filter.getIgnoreCase()
-						&& filter.getValue() instanceof String) {
-					restrictions = criteriaBuilder
-							.and(restrictions,
-									criteriaBuilder.equal(criteriaBuilder
-											.lower(root.<String> get(filter
-													.getProperty())),
-											((String) filter.getValue())
-													.toLowerCase()));
-				} else {
-					restrictions = criteriaBuilder.and(
-							restrictions,
-							criteriaBuilder.equal(
-									root.get(filter.getProperty()),
-									filter.getValue()));
+				for (Filter filter : filters) {
+					if (filter == null || StringUtils.isEmpty(filter.getProperty())) {
+						continue;
+					}
+					if (filter.getOperator() == Operator.eq
+							&& filter.getValue() != null) {
+						if (filter.getIgnoreCase() != null && filter.getIgnoreCase()
+								&& filter.getValue() instanceof String) {
+							restrictions = criteriaBuilder
+									.and(restrictions,
+											criteriaBuilder.equal(criteriaBuilder
+													.lower(root.<String> get(filter
+															.getProperty())),
+															((String) filter.getValue())
+															.toLowerCase()));
+						} else {
+							restrictions = criteriaBuilder.and(
+									restrictions,
+									criteriaBuilder.equal(
+											root.get(filter.getProperty()),
+											filter.getValue()));
+						}
+					} else if (filter.getOperator() == Operator.ne
+							&& filter.getValue() != null) {
+						if (filter.getIgnoreCase() != null && filter.getIgnoreCase()
+								&& filter.getValue() instanceof String) {
+							restrictions = criteriaBuilder
+									.and(restrictions,
+											criteriaBuilder.notEqual(criteriaBuilder
+													.lower(root.<String> get(filter
+															.getProperty())),
+															((String) filter.getValue())
+															.toLowerCase()));
+						} else {
+							restrictions = criteriaBuilder.and(
+									restrictions,
+									criteriaBuilder.notEqual(
+											root.get(filter.getProperty()),
+											filter.getValue()));
+						}
+					} else if (filter.getOperator() == Operator.gt
+							&& filter.getValue() != null) {
+						restrictions = criteriaBuilder.and(restrictions,
+								criteriaBuilder.gt(
+										root.<Number> get(filter.getProperty()),
+										(Number) filter.getValue()));
+					} else if (filter.getOperator() == Operator.lt
+							&& filter.getValue() != null) {
+						restrictions = criteriaBuilder.and(restrictions,
+								criteriaBuilder.lt(
+										root.<Number> get(filter.getProperty()),
+										(Number) filter.getValue()));
+					} else if (filter.getOperator() == Operator.ge
+							&& filter.getValue() != null) {
+						restrictions = criteriaBuilder.and(restrictions,
+								criteriaBuilder.ge(
+										root.<Number> get(filter.getProperty()),
+										(Number) filter.getValue()));
+					} else if (filter.getOperator() == Operator.le
+							&& filter.getValue() != null) {
+						restrictions = criteriaBuilder.and(restrictions,
+								criteriaBuilder.le(
+										root.<Number> get(filter.getProperty()),
+										(Number) filter.getValue()));
+					} else if (filter.getOperator() == Operator.like
+							&& filter.getValue() != null
+							&& filter.getValue() instanceof String) {
+						restrictions = criteriaBuilder.and(restrictions,
+								criteriaBuilder.like(
+										root.<String> get(filter.getProperty()),
+										(String) filter.getValue()));
+					} else if (filter.getOperator() == Operator.in
+							&& filter.getValue() != null) {
+						restrictions = criteriaBuilder.and(restrictions,
+								root.get(filter.getProperty()).in(filter.getValue()));
+					} else if (filter.getOperator() == Operator.isNull) {
+						restrictions = criteriaBuilder.and(restrictions,
+								root.get(filter.getProperty()).isNull());
+					} else if (filter.getOperator() == Operator.isNotNull) {
+						restrictions = criteriaBuilder.and(restrictions,
+								root.get(filter.getProperty()).isNotNull());
+					}
 				}
-			} else if (filter.getOperator() == Operator.ne
-					&& filter.getValue() != null) {
-				if (filter.getIgnoreCase() != null && filter.getIgnoreCase()
-						&& filter.getValue() instanceof String) {
-					restrictions = criteriaBuilder
-							.and(restrictions,
-									criteriaBuilder.notEqual(criteriaBuilder
-											.lower(root.<String> get(filter
-													.getProperty())),
-											((String) filter.getValue())
-													.toLowerCase()));
-				} else {
-					restrictions = criteriaBuilder.and(
-							restrictions,
-							criteriaBuilder.notEqual(
-									root.get(filter.getProperty()),
-									filter.getValue()));
-				}
-			} else if (filter.getOperator() == Operator.gt
-					&& filter.getValue() != null) {
-				restrictions = criteriaBuilder.and(restrictions,
-						criteriaBuilder.gt(
-								root.<Number> get(filter.getProperty()),
-								(Number) filter.getValue()));
-			} else if (filter.getOperator() == Operator.lt
-					&& filter.getValue() != null) {
-				restrictions = criteriaBuilder.and(restrictions,
-						criteriaBuilder.lt(
-								root.<Number> get(filter.getProperty()),
-								(Number) filter.getValue()));
-			} else if (filter.getOperator() == Operator.ge
-					&& filter.getValue() != null) {
-				restrictions = criteriaBuilder.and(restrictions,
-						criteriaBuilder.ge(
-								root.<Number> get(filter.getProperty()),
-								(Number) filter.getValue()));
-			} else if (filter.getOperator() == Operator.le
-					&& filter.getValue() != null) {
-				restrictions = criteriaBuilder.and(restrictions,
-						criteriaBuilder.le(
-								root.<Number> get(filter.getProperty()),
-								(Number) filter.getValue()));
-			} else if (filter.getOperator() == Operator.like
-					&& filter.getValue() != null
-					&& filter.getValue() instanceof String) {
-				restrictions = criteriaBuilder.and(restrictions,
-						criteriaBuilder.like(
-								root.<String> get(filter.getProperty()),
-								(String) filter.getValue()));
-			} else if (filter.getOperator() == Operator.in
-					&& filter.getValue() != null) {
-				restrictions = criteriaBuilder.and(restrictions,
-						root.get(filter.getProperty()).in(filter.getValue()));
-			} else if (filter.getOperator() == Operator.isNull) {
-				restrictions = criteriaBuilder.and(restrictions,
-						root.get(filter.getProperty()).isNull());
-			} else if (filter.getOperator() == Operator.isNotNull) {
-				restrictions = criteriaBuilder.and(restrictions,
-						root.get(filter.getProperty()).isNotNull());
-			}
-		}
-		criteriaQuery.where(restrictions);
+				criteriaQuery.where(restrictions);
 	}
 
 	private void addRestrictions(CriteriaQuery<T> criteriaQuery,
@@ -432,161 +418,100 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		Predicate restrictions = criteriaQuery.getRestriction() != null ? criteriaQuery
 				.getRestriction() : criteriaBuilder.conjunction();
-		if (StringUtils.isNotEmpty(pageable.getSearchProperty())
-				&& StringUtils.isNotEmpty(pageable.getSearchValue())) {
-			restrictions = criteriaBuilder.and(restrictions, criteriaBuilder
-					.like(root.<String> get(pageable.getSearchProperty()), "%"
-							+ pageable.getSearchValue() + "%"));
-		}
-		if (pageable.getFilters() != null) {
-			for (Filter filter : pageable.getFilters()) {
-				if (filter == null || StringUtils.isEmpty(filter.getProperty())) {
-					continue;
+				if (StringUtils.isNotEmpty(pageable.getSearchProperty())
+						&& StringUtils.isNotEmpty(pageable.getSearchValue())) {
+					restrictions = criteriaBuilder.and(restrictions, criteriaBuilder
+							.like(root.<String> get(pageable.getSearchProperty()), "%"
+									+ pageable.getSearchValue() + "%"));
 				}
-				if (filter.getOperator() == Operator.eq
-						&& filter.getValue() != null) {
-					if (filter.getIgnoreCase() != null
-							&& filter.getIgnoreCase()
-							&& filter.getValue() instanceof String) {
-						restrictions = criteriaBuilder.and(restrictions,
-								criteriaBuilder.equal(criteriaBuilder
-										.lower(root.<String> get(filter
-												.getProperty())),
-										((String) filter.getValue())
-												.toLowerCase()));
-					} else {
-						restrictions = criteriaBuilder.and(
-								restrictions,
-								criteriaBuilder.equal(
-										root.get(filter.getProperty()),
-										filter.getValue()));
-					}
-				} else if (filter.getOperator() == Operator.ne
-						&& filter.getValue() != null) {
-					if (filter.getIgnoreCase() != null
-							&& filter.getIgnoreCase()
-							&& filter.getValue() instanceof String) {
-						restrictions = criteriaBuilder.and(restrictions,
-								criteriaBuilder.notEqual(criteriaBuilder
-										.lower(root.<String> get(filter
-												.getProperty())),
-										((String) filter.getValue())
-												.toLowerCase()));
-					} else {
-						restrictions = criteriaBuilder.and(
-								restrictions,
-								criteriaBuilder.notEqual(
-										root.get(filter.getProperty()),
-										filter.getValue()));
-					}
-				} else if (filter.getOperator() == Operator.gt
-						&& filter.getValue() != null) {
-					restrictions = criteriaBuilder.and(restrictions,
-							criteriaBuilder.gt(
-									root.<Number> get(filter.getProperty()),
-									(Number) filter.getValue()));
-				} else if (filter.getOperator() == Operator.lt
-						&& filter.getValue() != null) {
-					restrictions = criteriaBuilder.and(restrictions,
-							criteriaBuilder.lt(
-									root.<Number> get(filter.getProperty()),
-									(Number) filter.getValue()));
-				} else if (filter.getOperator() == Operator.ge
-						&& filter.getValue() != null) {
-					restrictions = criteriaBuilder.and(restrictions,
-							criteriaBuilder.ge(
-									root.<Number> get(filter.getProperty()),
-									(Number) filter.getValue()));
-				} else if (filter.getOperator() == Operator.le
-						&& filter.getValue() != null) {
-					restrictions = criteriaBuilder.and(restrictions,
-							criteriaBuilder.le(
-									root.<Number> get(filter.getProperty()),
-									(Number) filter.getValue()));
-				} else if (filter.getOperator() == Operator.like
-						&& filter.getValue() != null
-						&& filter.getValue() instanceof String) {
-					restrictions = criteriaBuilder.and(restrictions,
-							criteriaBuilder.like(
-									root.<String> get(filter.getProperty()),
-									(String) filter.getValue()));
-				} else if (filter.getOperator() == Operator.in
-						&& filter.getValue() != null) {
-					restrictions = criteriaBuilder.and(restrictions,
-							root.get(filter.getProperty())
+				if (pageable.getFilters() != null) {
+					for (Filter filter : pageable.getFilters()) {
+						if (filter == null || StringUtils.isEmpty(filter.getProperty())) {
+							continue;
+						}
+						if (filter.getOperator() == Operator.eq
+								&& filter.getValue() != null) {
+							if (filter.getIgnoreCase() != null
+									&& filter.getIgnoreCase()
+									&& filter.getValue() instanceof String) {
+								restrictions = criteriaBuilder.and(restrictions,
+										criteriaBuilder.equal(criteriaBuilder
+												.lower(root.<String> get(filter
+														.getProperty())),
+														((String) filter.getValue())
+														.toLowerCase()));
+							} else {
+								restrictions = criteriaBuilder.and(
+										restrictions,
+										criteriaBuilder.equal(
+												root.get(filter.getProperty()),
+												filter.getValue()));
+							}
+						} else if (filter.getOperator() == Operator.ne
+								&& filter.getValue() != null) {
+							if (filter.getIgnoreCase() != null
+									&& filter.getIgnoreCase()
+									&& filter.getValue() instanceof String) {
+								restrictions = criteriaBuilder.and(restrictions,
+										criteriaBuilder.notEqual(criteriaBuilder
+												.lower(root.<String> get(filter
+														.getProperty())),
+														((String) filter.getValue())
+														.toLowerCase()));
+							} else {
+								restrictions = criteriaBuilder.and(
+										restrictions,
+										criteriaBuilder.notEqual(
+												root.get(filter.getProperty()),
+												filter.getValue()));
+							}
+						} else if (filter.getOperator() == Operator.gt
+								&& filter.getValue() != null) {
+							restrictions = criteriaBuilder.and(restrictions,
+									criteriaBuilder.gt(
+											root.<Number> get(filter.getProperty()),
+											(Number) filter.getValue()));
+						} else if (filter.getOperator() == Operator.lt
+								&& filter.getValue() != null) {
+							restrictions = criteriaBuilder.and(restrictions,
+									criteriaBuilder.lt(
+											root.<Number> get(filter.getProperty()),
+											(Number) filter.getValue()));
+						} else if (filter.getOperator() == Operator.ge
+								&& filter.getValue() != null) {
+							restrictions = criteriaBuilder.and(restrictions,
+									criteriaBuilder.ge(
+											root.<Number> get(filter.getProperty()),
+											(Number) filter.getValue()));
+						} else if (filter.getOperator() == Operator.le
+								&& filter.getValue() != null) {
+							restrictions = criteriaBuilder.and(restrictions,
+									criteriaBuilder.le(
+											root.<Number> get(filter.getProperty()),
+											(Number) filter.getValue()));
+						} else if (filter.getOperator() == Operator.like
+								&& filter.getValue() != null
+								&& filter.getValue() instanceof String) {
+							restrictions = criteriaBuilder.and(restrictions,
+									criteriaBuilder.like(
+											root.<String> get(filter.getProperty()),
+											(String) filter.getValue()));
+						} else if (filter.getOperator() == Operator.in
+								&& filter.getValue() != null) {
+							restrictions = criteriaBuilder.and(restrictions,
+									root.get(filter.getProperty())
 									.in(filter.getValue()));
-				} else if (filter.getOperator() == Operator.isNull) {
-					restrictions = criteriaBuilder.and(restrictions,
-							root.get(filter.getProperty()).isNull());
-				} else if (filter.getOperator() == Operator.isNotNull) {
-					restrictions = criteriaBuilder.and(restrictions,
-							root.get(filter.getProperty()).isNotNull());
+						} else if (filter.getOperator() == Operator.isNull) {
+							restrictions = criteriaBuilder.and(restrictions,
+									root.get(filter.getProperty()).isNull());
+						} else if (filter.getOperator() == Operator.isNotNull) {
+							restrictions = criteriaBuilder.and(restrictions,
+									root.get(filter.getProperty()).isNotNull());
+						}
+					}
 				}
-			}
-		}
-		criteriaQuery.where(restrictions);
+				criteriaQuery.where(restrictions);
 	}
 
-	private void addOrders(CriteriaQuery<T> criteriaQuery, List<Order> orders) {
-		if (criteriaQuery == null || orders == null || orders.isEmpty()) {
-			return;
-		}
-		Root<T> root = getRoot(criteriaQuery);
-		if (root == null) {
-			return;
-		}
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		List<javax.persistence.criteria.Order> orderList = new ArrayList<javax.persistence.criteria.Order>();
-		if (!criteriaQuery.getOrderList().isEmpty()) {
-			orderList.addAll(criteriaQuery.getOrderList());
-		}
-		for (Order order : orders) {
-			if (order.getDirection() == Direction.asc) {
-				orderList
-						.add(criteriaBuilder.asc(root.get(order.getProperty())));
-			} else if (order.getDirection() == Direction.desc) {
-				orderList
-						.add(criteriaBuilder.desc(root.get(order.getProperty())));
-			}
-		}
-		criteriaQuery.orderBy(orderList);
-	}
-
-	private void addOrders(CriteriaQuery<T> criteriaQuery, Pageable pageable) {
-		if (criteriaQuery == null || pageable == null) {
-			return;
-		}
-		Root<T> root = getRoot(criteriaQuery);
-		if (root == null) {
-			return;
-		}
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		List<javax.persistence.criteria.Order> orderList = new ArrayList<javax.persistence.criteria.Order>();
-		if (!criteriaQuery.getOrderList().isEmpty()) {
-			orderList.addAll(criteriaQuery.getOrderList());
-		}
-		if (StringUtils.isNotEmpty(pageable.getOrderProperty())
-				&& pageable.getOrderDirection() != null) {
-			if (pageable.getOrderDirection() == Direction.asc) {
-				orderList.add(criteriaBuilder.asc(root.get(pageable
-						.getOrderProperty())));
-			} else if (pageable.getOrderDirection() == Direction.desc) {
-				orderList.add(criteriaBuilder.desc(root.get(pageable
-						.getOrderProperty())));
-			}
-		}
-		if (pageable.getOrders() != null) {
-			for (Order order : pageable.getOrders()) {
-				if (order.getDirection() == Direction.asc) {
-					orderList.add(criteriaBuilder.asc(root.get(order
-							.getProperty())));
-				} else if (order.getDirection() == Direction.desc) {
-					orderList.add(criteriaBuilder.desc(root.get(order
-							.getProperty())));
-				}
-			}
-		}
-		criteriaQuery.orderBy(orderList);
-	}
 
 }
