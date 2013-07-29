@@ -3,7 +3,6 @@ package com.zero.service;
 import java.util.Date;
 import java.util.List;
 
-import com.zero.entity.StRsvrR;
 import com.zero.entity.StWasR;
 
 public interface StWasRService extends BaseService<StWasR, Long> {
