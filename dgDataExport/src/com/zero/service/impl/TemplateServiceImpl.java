@@ -22,6 +22,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
 
+import com.zero.Dom4jUtil;
 import com.zero.Template;
 import com.zero.Template.Type;
 import com.zero.service.TemplateService;
@@ -34,7 +35,7 @@ import com.zero.service.TemplateService;
  */
 @Service("templateServiceImpl")
 public class TemplateServiceImpl implements TemplateService,
-		ServletContextAware {
+ServletContextAware {
 
 	/** servletContext */
 	private ServletContext servletContext;
@@ -62,6 +63,22 @@ public class TemplateServiceImpl implements TemplateService,
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	public void Update(Template template) {
+		try {
+			File configXmlFile = new ClassPathResource(
+					com.zero.CommonAttributes.CONFIG_XML_PATH).getFile();
+			Document document = new SAXReader().read(configXmlFile);
+			Element element = (Element) document
+					.selectSingleNode("/config/transfer[@id='" + template.getId() + "']");
+			if(element!=null){
+				element.attribute("stm").setText(template.getStm());
+			}
+			Dom4jUtil.write(document, configXmlFile.getAbsolutePath());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -167,7 +184,7 @@ public class TemplateServiceImpl implements TemplateService,
 		String type = element.attributeValue("type");
 		String name = element.attributeValue("name");
 		String entity = element.attributeValue("entity");
-		String interval = element.attributeValue("interval");
+		String stm = element.attributeValue("stm");
 		String filePath = element.attributeValue("filePath");
 
 		Template template = new Template();
@@ -175,7 +192,7 @@ public class TemplateServiceImpl implements TemplateService,
 		template.setType(Type.valueOf(type));
 		template.setName(name);
 		template.setEntity(entity);
-		template.setInterval(interval);
+		template.setStm(stm);
 		template.setFilePath(filePath);
 		return template;
 	}

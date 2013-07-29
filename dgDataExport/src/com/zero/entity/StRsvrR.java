@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.test.util.DateUtil;
 import com.zero.CommonAttributes;
+import com.zero.DateUtil;
 
 /**
  * StRsvrR entity. @author MyEclipse Persistence Tools
@@ -70,8 +70,8 @@ public class StRsvrR implements java.io.Serializable {
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "stcd", column = @Column(name = "STCD", nullable = false, length = 16)),
-			@AttributeOverride(name = "tm", column = @Column(name = "TM", nullable = false, length = 7)) })
+		@AttributeOverride(name = "stcd", column = @Column(name = "STCD", nullable = false, length = 16)),
+		@AttributeOverride(name = "tm", column = @Column(name = "TM", nullable = false, length = 7)) })
 	public StRsvrRId getId() {
 		return id;
 	}
@@ -180,21 +180,21 @@ public class StRsvrR implements java.io.Serializable {
 				CommonAttributes.DATE_PATTERNS[7]));
 		sb.append(",");
 
-		sb.append(this.getRz() == null ? "" : this.getRz().toString());
+		sb.append(getRz() == null ? "" : getRz().toString());
 		sb.append(",");
-		sb.append(this.getInq() == null ? "" : this.getInq().toString());
+		sb.append(getInq() == null ? "" : getInq().toString());
 		sb.append(",");
-		sb.append(this.getW() == null ? "" : this.getW().toString());
+		sb.append(getW() == null ? "" : getW().toString());
 		sb.append(",");
-		sb.append(this.getOtq() == null ? "" : this.getOtq().toString());
+		sb.append(getOtq() == null ? "" : getOtq().toString());
 		sb.append(",");
-		sb.append(this.getRwchrcd() == null ? "" : this.getRwchrcd());
+		sb.append(getRwchrcd() == null ? "" : getRwchrcd());
 		sb.append(",");
-		sb.append(this.getRwptn() == null ? "" : this.getRwptn());
+		sb.append(getRwptn() == null ? "" : getRwptn());
 		sb.append(",");
-		sb.append(this.getInqdr() == null ? "" : this.getInqdr().toString());
+		sb.append(getInqdr() == null ? "" : getInqdr().toString());
 		sb.append(",");
-		sb.append(this.getMsqmt() == null ? "" : this.getMsqmt());
+		sb.append(getMsqmt() == null ? "" : getMsqmt());
 		sb.append(",");
 
 		return sb.toString();

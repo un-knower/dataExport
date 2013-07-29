@@ -15,7 +15,7 @@ public interface FtpService {
 	 * @param file
 	 *            要上传的文件
 	 */
-	public void sentTo(File file);
+	public void sendTo(File file);
 
 	/**
 	 * 把指定的文件上传到ftp服务器的指定目录
@@ -23,5 +23,5 @@ public interface FtpService {
 	 * @param path
 	 * @param file
 	 */
-	public void sentTo(String path, File file);
+	public void sendTo(String filename, File file);
 }

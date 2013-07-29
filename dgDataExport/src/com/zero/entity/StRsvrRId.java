@@ -45,7 +45,7 @@ public class StRsvrRId implements java.io.Serializable {
 		this.stcd = stcd;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TM", nullable = false, length = 7)
 	public Date getTm() {
 		return tm;

@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.test.util.DateUtil;
 import com.zero.CommonAttributes;
+import com.zero.DateUtil;
 
 /**
  * StPptnR entity. @author MyEclipse Persistence Tools
@@ -65,8 +65,8 @@ public class StPptnR implements java.io.Serializable {
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "tm", column = @Column(name = "TM", nullable = false, length = 7)),
-			@AttributeOverride(name = "stcd", column = @Column(name = "STCD", nullable = false, length = 16)) })
+		@AttributeOverride(name = "tm", column = @Column(name = "TM", nullable = false, length = 7)),
+		@AttributeOverride(name = "stcd", column = @Column(name = "STCD", nullable = false, length = 16)) })
 	public StPptnRId getId() {
 		return id;
 	}
@@ -156,17 +156,17 @@ public class StPptnR implements java.io.Serializable {
 		sb.append(DateUtil.getDateStr(id.getTm(),
 				CommonAttributes.DATE_PATTERNS[7]));
 		sb.append(",");
-		sb.append(this.getDrp() == null ? "" : this.getDrp().toString());
+		sb.append(getDrp() == null ? "" : getDrp().toString());
 		sb.append(",");
-		sb.append(this.getIntv() == null ? "" : this.getIntv().toString());
+		sb.append(getIntv() == null ? "" : getIntv().toString());
 		sb.append(",");
-		sb.append(this.getPdr() == null ? "" : this.getPdr().toString());
+		sb.append(getPdr() == null ? "" : getPdr().toString());
 		sb.append(",");
-		sb.append(this.getDyp() == null ? "" : this.getDyp().toString());
+		sb.append(getDyp() == null ? "" : getDyp().toString());
 		sb.append(",");
-		sb.append(this.getWth() == null ? "" : this.getWth());
+		sb.append(getWth() == null ? "" : getWth());
 		sb.append(",");
-		sb.append(this.getRntypeGd() == null ? "" : this.getRntypeGd());
+		sb.append(getRntypeGd() == null ? "" : getRntypeGd());
 		return sb.toString();
 	}
 }

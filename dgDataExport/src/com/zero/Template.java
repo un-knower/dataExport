@@ -33,8 +33,8 @@ public class Template implements Serializable {
 	/** 模板文件路径 */
 	private String entity;
 
-	/** 静态文件路径 */
-	private String interval;
+	/** 开始时间 */
+	private String stm;
 
 	/** 描述 */
 	private String filePath;
@@ -50,12 +50,13 @@ public class Template implements Serializable {
 		this.entity = entity;
 	}
 
-	public String getInterval() {
-		return interval;
+
+	public String getStm() {
+		return stm;
 	}
 
-	public void setInterval(String interval) {
-		this.interval = interval;
+	public void setStm(String stm) {
+		this.stm = stm;
 	}
 
 	public String getFilePath() {

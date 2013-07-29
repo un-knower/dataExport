@@ -79,5 +79,6 @@ public interface TemplateService {
 	void write(Template template, String content, Boolean append);
 
 	File write(Template template, Collection<?> collection, Boolean append);
+	void Update(Template template);
 
 }

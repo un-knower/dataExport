@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <config> 
-	<transfer id="com.zero.entity.StPptnR" type="trans" interval="1" name="数据转换" entity="StPptnR" filePath="ST_PPTN_R.csv"/>
-	<transfer id="com.zero.entity.StRiverR" type="trans" interval="1" name="数据转换" entity="StPptnR" filePath="ST_River_R.csv"/>
-	<transfer id="com.zero.entity.StRsvrR" type="trans" interval="1" name="数据转换" entity="StPptnR" filePath="ST_Rsvr_R.csv"/>
-	<transfer id="com.zero.entity.StWasR" type="trans" interval="1" name="数据转换" entity="StPptnR" filePath="ST_Was_R.csv"/>
+	<transfer id="com.zero.entity.StPptnR" type="trans" stm="2013-07-12 12:00:00" name="数据转换" entity="StPptnR" filePath="ST_PPTN_R.csv"/>
+	<transfer id="com.zero.entity.StRiverR" type="trans" stm="2013-07-12 12:00:00" name="数据转换" entity="StPptnR" filePath="ST_River_R.csv"/>
+	<transfer id="com.zero.entity.StRsvrR" type="trans" stm="2013-07-12 12:00:00" name="数据转换" entity="StPptnR" filePath="ST_Rsvr_R.csv"/>
+	<transfer id="com.zero.entity.StWasR" type="trans" stm="2013-07-12 12:00:00" name="数据转换" entity="StPptnR" filePath="ST_Was_R.csv"/>
 </config>

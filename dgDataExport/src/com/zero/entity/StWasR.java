@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.test.util.DateUtil;
 import com.zero.CommonAttributes;
+import com.zero.DateUtil;
 
 /**
  * StWasR entity. @author MyEclipse Persistence Tools
@@ -66,8 +66,8 @@ public class StWasR implements java.io.Serializable {
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "tm", column = @Column(name = "TM", nullable = false, length = 7)),
-			@AttributeOverride(name = "stcd", column = @Column(name = "STCD", nullable = false, length = 16)) })
+		@AttributeOverride(name = "tm", column = @Column(name = "TM", nullable = false, length = 7)),
+		@AttributeOverride(name = "stcd", column = @Column(name = "STCD", nullable = false, length = 16)) })
 	public StWasRId getId() {
 		return id;
 	}
@@ -157,17 +157,17 @@ public class StWasR implements java.io.Serializable {
 		sb.append(DateUtil.getDateStr(id.getTm(),
 				CommonAttributes.DATE_PATTERNS[7]));
 		sb.append(",");
-		sb.append(this.getUpz() == null ? "" : this.getUpz().toString());
+		sb.append(getUpz() == null ? "" : getUpz().toString());
 		sb.append(",");
-		sb.append(this.getDwz() == null ? "" : this.getDwz().toString());
+		sb.append(getDwz() == null ? "" : getDwz().toString());
 		sb.append(",");
-		sb.append(this.getTgtq() == null ? "" : this.getTgtq().toString());
+		sb.append(getTgtq() == null ? "" : getTgtq().toString());
 		sb.append(",");
-		sb.append(this.getSwchrcd() == null ? "" : this.getSwchrcd());
+		sb.append(getSwchrcd() == null ? "" : getSwchrcd());
 		sb.append(",");
-		sb.append(this.getSdwwptn() == null ? "" : this.getSdwwptn());
+		sb.append(getSdwwptn() == null ? "" : getSdwwptn());
 		sb.append(",");
-		sb.append(this.getSupwptn() == null ? "" : this.getSupwptn());
+		sb.append(getSupwptn() == null ? "" : getSupwptn());
 		sb.append(",");
 		return sb.toString();
 	}

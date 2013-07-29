@@ -1,9 +1,10 @@
 package com.test.cvs;
 
+import java.io.File;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TestCvsService {
 	public static ApplicationContext cxt;
@@ -14,14 +15,18 @@ public class TestCvsService {
 		// ArrayList<StPPTNR> data = new ArrayList<StPPTNR>();
 		// data.add(new StPPTNR("1233", new Date(), 23.35));
 		// csvService.ListToCsv(data);
+		File file = new File("d://test/test.csv");
+		System.out.println(file.getAbsolutePath());
+		System.out.println(file.getParent());
+		System.out.println(file.getName());
 	}
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		try {
-			cxt = new ClassPathXmlApplicationContext("applicationContext.xml");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//		try {
+		//			cxt = new ClassPathXmlApplicationContext("applicationContext.xml");
+		//		} catch (Exception e) {
+		//			e.printStackTrace();
+		//		}
 	}
 }

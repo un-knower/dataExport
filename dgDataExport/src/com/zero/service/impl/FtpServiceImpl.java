@@ -31,7 +31,15 @@ public class FtpServiceImpl implements FtpService {
 	private FTPClient ftp;
 	protected final Logger log = Logger.getLogger(getClass());
 
-	public void sentTo(File file) {
+	public void sendTo(File file) {
+		sendTo(file.getName(),file);
+	}
+
+	public void sendTo(String filename, File file) {
+		if(file==null||!file.exists()){
+			log.info("文件不存在");
+			return ;
+		}
 		if (ftp == null) {
 			ftp = new FTPClient();
 		}
@@ -51,7 +59,7 @@ public class FtpServiceImpl implements FtpService {
 				log.info("改变工作路径失败" + path);
 			}
 			FileInputStream input = new FileInputStream(file);
-			ftp.storeFile(file.getName(), input);
+			ftp.storeFile(filename, input);
 			input.close();
 			ftp.logout();
 			log.info("上传文件成功" + file.getName());
@@ -65,10 +73,6 @@ public class FtpServiceImpl implements FtpService {
 				}
 			}
 		}
-	}
-
-	public void sentTo(String path, File file) {
-
 	}
 
 }

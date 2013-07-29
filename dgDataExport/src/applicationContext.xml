@@ -56,6 +56,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<tx:annotation-driven transaction-manager="transactionManager" />
-	<!-- 定时器配置<import resource="zero-timer.xml"/> -->
+	<tx:annotation-driven transaction-manager="transactionManager" ></tx:annotation-driven>
+	<!-- 定时器配置-->
+	<import resource="zero-timer.xml"/> 
 </beans>

@@ -1,5 +1,8 @@
 package com.zero.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,10 @@ public class StRiverRServiceImpl extends BaseServiceImpl<StRiverR, Long>
 	@Transactional(readOnly = true)
 	public Page<StRiverR> findPage(Pageable pageable) {
 		return stRiverRDao.findPage(pageable);
+	}
+
+	public List<StRiverR> findList(Date beginDate, Integer first, Integer count) {
+		return stRiverRDao.findList(beginDate,first,count);
 	}
 
 }

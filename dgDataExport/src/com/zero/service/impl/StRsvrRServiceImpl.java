@@ -1,5 +1,8 @@
 package com.zero.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,10 @@ public class StRsvrRServiceImpl extends BaseServiceImpl<StRsvrR, Long>
 	@Transactional(readOnly = true)
 	public Page<StRsvrR> findPage(Pageable pageable) {
 		return stRsvrRDao.findPage(pageable);
+	}
+
+	public List<StRsvrR> findList(Date beginDate, Integer first, Integer count) {
+		return stRsvrRDao.findList(beginDate,first,count);
 	}
 
 }

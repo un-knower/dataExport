@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.test.util.DateUtil;
 import com.zero.CommonAttributes;
+import com.zero.DateUtil;
 
 /**
  * StRiverR entity. @author MyEclipse Persistence Tools
@@ -74,8 +74,8 @@ public class StRiverR implements java.io.Serializable {
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "tm", column = @Column(name = "TM", nullable = false, length = 7)),
-			@AttributeOverride(name = "stcd", column = @Column(name = "STCD", nullable = false, length = 16)) })
+		@AttributeOverride(name = "tm", column = @Column(name = "TM", nullable = false, length = 7)),
+		@AttributeOverride(name = "stcd", column = @Column(name = "STCD", nullable = false, length = 16)) })
 	public StRiverRId getId() {
 		return id;
 	}
@@ -201,25 +201,25 @@ public class StRiverR implements java.io.Serializable {
 		sb.append(DateUtil.getDateStr(id.getTm(),
 				CommonAttributes.DATE_PATTERNS[7]));
 		sb.append(",");
-		sb.append(this.getZ() == null ? "" : this.getZ().toString());
+		sb.append(getZ() == null ? "" : getZ().toString());
 		sb.append(",");
-		sb.append(this.getQ() == null ? "" : this.getQ().toString());
+		sb.append(getQ() == null ? "" : getQ().toString());
 		sb.append(",");
-		sb.append(this.getXsa() == null ? "" : this.getXsa().toString());
+		sb.append(getXsa() == null ? "" : getXsa().toString());
 		sb.append(",");
-		sb.append(this.getXsavv() == null ? "" : this.getXsavv().toString());
+		sb.append(getXsavv() == null ? "" : getXsavv().toString());
 		sb.append(",");
-		sb.append(this.getXsmxv() == null ? "" : this.getXsmxv().toString());
+		sb.append(getXsmxv() == null ? "" : getXsmxv().toString());
 		sb.append(",");
-		sb.append(this.getFlwchrcd() == null ? "" : this.getFlwchrcd());
+		sb.append(getFlwchrcd() == null ? "" : getFlwchrcd());
 		sb.append(",");
-		sb.append(this.getWptn() == null ? "" : this.getWptn());
+		sb.append(getWptn() == null ? "" : getWptn());
 		sb.append(",");
-		sb.append(this.getMsqmt() == null ? "" : this.getMsqmt());
+		sb.append(getMsqmt() == null ? "" : getMsqmt());
 		sb.append(",");
-		sb.append(this.getMsamt() == null ? "" : this.getMsamt());
+		sb.append(getMsamt() == null ? "" : getMsamt());
 		sb.append(",");
-		sb.append(this.getMsvmt() == null ? "" : this.getMsvmt());
+		sb.append(getMsvmt() == null ? "" : getMsvmt());
 		sb.append(",");
 		return sb.toString();
 	}

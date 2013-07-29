@@ -12,60 +12,78 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="zerotrigger" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="questionNumTrigger-overTimer"/>
-				<ref bean="statichtmltrigger-overTimer"/>
+				<ref bean="stpptnrTrigger-overTimer"/>
+				<ref bean="striverrTrigger-overTimer"/>
+				<ref bean="strsvrrTrigger-overTimer"/>
+				<ref bean="stwasrTrigger-overTimer"/>
 			</list>
 		</property>
 	</bean>
-	<!-- 定时更新问题个数 -->
-	<bean id="questionNumTrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<bean id="stpptnrTrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
-			<ref bean="questionNumJobDetailFactory-overTimer"/>
+			<ref bean="stpptnrJobDetailFactory-overTimer"/>
 		</property>
 		<property name="cronExpression">
-			<value>0 1/3 * * * ?</value>
+			<value>0 5/15 * * * ?</value>
 		</property>
 	</bean>
-	<bean id="questionNumJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<bean id="striverrTrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="striverrJobDetailFactory-overTimer"/>
+		</property>
+		<property name="cronExpression">
+			<value>0 5/15 * * * ?</value>
+		</property>
+	</bean>
+	<bean id="strsvrrTrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="strsvrrJobDetailFactory-overTimer"/>
+		</property>
+		<property name="cronExpression">
+			<value>0 5/15 * * * ?</value>
+		</property>
+	</bean>
+	<bean id="stwasrTrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="stwasrJobDetailFactory-overTimer"/>
+		</property>
+		<property name="cronExpression">
+			<value>0 5/15 * * * ?</value>
+		</property>
+	</bean>
+	<bean id="stwasrJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
-			<ref bean="iaskCommonServiceImpl"/>
+			<ref bean="transferServiceImpl"/>
 		</property>
 		<property name="targetMethod">
-			<value>initQuestionNum</value>
+			<value>transferStWasR</value>
 		</property>
 		<property name="concurrent" value="false"/>
 	</bean>
-	<!-- 静态化页面 -->
-	<bean id="htmlServiceImpl" class="com.gs.service.iask.impl.HtmlServiceImpl" scope="singleton" autowire="byName">
-	<property name="baseurl"><value>http://localhost/</value></property>
-	<property name="basepath"><value>e:\\www.gosunn.com\\gosunn/</value></property>
-	<property name="urls">
-		<map>
-			<entry key="iask/queryQuestion.ghtml" value="iask/index.html"/>
-			<entry key="iask/static/qdetailright.ghtml" value="iask/qdetailright.html"/>
-			<entry key="jsp.ghtml?rel=iask/small/xtgg" value="iask/xtgg.html"/>
-			<entry key="iask/leftgroup.ghtml" value="iask/main/leftgroup.html"/>
-			<entry key="iask/rightgroup.ghtml" value="iask/main/rightgroup.html"/>
-			<entry key="small/tjry.ghtml" value="iask/small/tjry.html"/>
-			<entry key="sns/static/gsjgd.ghtml" value="sns/small/jgd.html"/>
-		</map>
-	</property>
-	</bean>
-	<!-- 定时静态化页面 -->
-	<bean id="statichtmltrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<property name="jobDetail">
-			<ref bean="statichtmltriggerJobDetailFactory-overTimer"/>
-		</property>
-		<property name="cronExpression">
-			<value>0 1/5 * * * ?</value>
-		</property>
-	</bean>
-	<bean id="statichtmltriggerJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<bean id="stpptnrJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
-			<ref bean="htmlServiceImpl"/>
+			<ref bean="transferServiceImpl"/>
 		</property>
 		<property name="targetMethod">
-			<value>staticHtml</value>
+			<value>transferStPPTNR</value>
+		</property>
+		<property name="concurrent" value="false"/>
+	</bean>
+	<bean id="striverrJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="transferServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>transferStRiverR</value>
+		</property>
+		<property name="concurrent" value="false"/>
+	</bean>
+	<bean id="strsvrrJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="transferServiceImpl"/>
+		</property>
+		<property name="targetMethod">
+			<value>transferStRsvrR</value>
 		</property>
 		<property name="concurrent" value="false"/>
 	</bean>

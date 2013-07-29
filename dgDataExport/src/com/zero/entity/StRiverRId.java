@@ -35,7 +35,7 @@ public class StRiverRId implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TM", nullable = false, length = 7)
 	public Date getTm() {
 		return tm;
