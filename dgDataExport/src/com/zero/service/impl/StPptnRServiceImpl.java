@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zero.Filter;
 import com.zero.Page;
 import com.zero.Pageable;
 import com.zero.dao.StPptnRDao;
@@ -17,7 +16,7 @@ import com.zero.service.StPptnRService;
 
 @Service
 public class StPptnRServiceImpl extends BaseServiceImpl<StPptnR, Long>
-		implements StPptnRService {
+implements StPptnRService {
 	@Autowired
 	@Qualifier("stPptnRDaoImpl")
 	private StPptnRDao stPptnRDao;

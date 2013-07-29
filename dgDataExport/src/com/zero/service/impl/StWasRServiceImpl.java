@@ -11,13 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zero.Page;
 import com.zero.Pageable;
 import com.zero.dao.StWasRDao;
-import com.zero.entity.StRsvrR;
 import com.zero.entity.StWasR;
 import com.zero.service.StWasRService;
 
 @Service
 public class StWasRServiceImpl extends BaseServiceImpl<StWasR, Long> implements
-		StWasRService {
+StWasRService {
 	@Autowired
 	@Qualifier("stWasRDaoImpl")
 	private StWasRDao stWasRDao;
